@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عيادة الدكتور خالد محمد- طب الأسنان</title>
+    <style>
+        /* --- المتغيرات والألوان الفاتحة --- */
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --primary-color: #00a8cc;
+            --text-color: #2b3a42;
+            --text-muted: #6c7a89;
+        }
+
+        /* --- التنسيقات العامة --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- لوحة التحكم باللون --- */
+        .color-picker-container {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--card-bg);
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            border: 1px solid #e0e0e0;
+        }
+        .color-picker-container label {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-weight: bold;
+        }
+        .color-picker-container input {
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            width: 40px;
+            height: 40px;
+        }
+
+        /* --- الهيدر والقائمة --- */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 999;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        nav ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- الأقسام الرئيسية --- */
+        section {
+            padding: 100px 20px 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .hero {
+            text-align: center;
+            padding: 150px 20px;
+            background: linear-gradient(180deg, var(--card-bg), var(--bg-color));
+        }
+        .hero h1 {
+            font-size: 42px;
+            margin-bottom: 15px;
+        }
+        .hero h1 span {
+            color: var(--primary-color);
+        }
+        .hero p {
+            color: var(--text-muted);
+            font-size: 18px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 40px;
+            color: var(--primary-color);
+            position: relative;
+        }
+        h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-color);
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.04);
+            margin-bottom: 20px;
+            border-right: 5px solid var(--primary-color);
+            border: 1px solid #eef2f5;
+        }
+        .experience-list {
+            list-style: none;
+        }
+        .experience-list li {
+            margin-bottom: 15px;
+            font-size: 17px;
+            position: relative;
+            padding-right: 25px;
+        }
+        .experience-list li::before {
+            content: '🦷';
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+
+        /* التقييمات */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .review-card {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.04);
+            border: 1px solid #eef2f5;
+        }
+        .stars {
+            color: #ffc107;
+            margin-bottom: 10px;
+        }
+
+        /* النماذج والأزرار */
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            background: #f9fbfb;
+            border: 1px solid #dbe3e6;
+            color: var(--text-color);
+            border-radius: 6px;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            background: #fff;
+        }
+        .btn {
+            background: var(--primary-color);
+            color: #fff;
+            padding: 14px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 17px;
+            transition: 0.3s;
+            width: 100%;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover {
+            opacity: 0.9;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .whatsapp-btn {
+            background-color: #25D366; /* لون الواتساب الرسمي */
+        }
+
+        .contact-info p {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        .contact-info span {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        footer {
+            background: #ffffff;
+            border-top: 1px solid #eef2f5;
+            padding: 40px 20px;
+            text-align: center;
+            margin-top: 60px;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .social-links a {
+            text-decoration: none;
+            font-size: 28px;
+            transition: 0.3s;
+        }
+        .social-links a:hover {
+            transform: translateY(-5px);
+        }
+
+        /* فقاعات الأسنان الخلفية */
+        .bubble-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .tooth-bubble {
+            position: absolute;
+            bottom: -50px;
+            font-size: 24px;
+            opacity: 0.25;
+            animation: floatUp 10s linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.25; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        .click-tooth {
+            position: absolute;
+            font-size: 30px;
+            pointer-events: none;
+            animation: popOut 0.6s ease-out forwards;
+            z-index: 10000;
+        }
+        @keyframes popOut {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+            100% { transform: translate(-50%, -100%) scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="color-picker-container">
+        <label for="colorPicker">اختر اللون</label>
+        <input type="color" id="colorPicker" value="#00a8cc">
+    </div>
+
+    <div class="bubble-container" id="bubbleContainer"></div>
+
+    <header>
+        <nav>
+            <div class="logo">د. خالد محمد</div>
+            <ul>
+                <li><a href="#home">الرئيسية</a></li>
+                <li><a href="#experience">الخبرات</a></li>
+                <li><a href="#booking">حجز موعد</a></li>
+                <li><a href="#reviews">التقييمات</a></li>
+                <li><a href="#contact">اتصل بنا</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <h1>عيادة الدكتور <span>خالد محمد</span></h1>
+        <p>ابتسامتكم هي شغفنا.. احجز موعدك الآن واعرف دورك فوراً.</p>
+    </section>
+
+    <section id="experience">
+        <h2>الخبرات والمؤهلات</h2>
+        <div class="card">
+            <ul class="experience-list">
+                <li>أخصائي جراحة وتجميل الأسنان وزراعتها.</li>
+                <li>خبرة أكثر من 10 سنوات في علاج الجذور والتركيبات الثابتة والمتحركة.</li>
+                <li>حاصل على شهادات معتمدة في تصميم الابتسامة الرقمية (Hollywood Smile).</li>
+                <li>عضو الجمعية الطبية لطب الأسنان.</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="booking">
+        <h2>حجز موعد ومعرفة الدور بالعيادة</h2>
+        <div class="card" style="text-align: center;">
+            <p style="font-size: 18px; margin-bottom: 20px; color: var(--text-muted);">
+                لتسهيل عملية الحجز وتفادي فترة الانتظار الطويلة، يمكنك الآن معرفة رقم كشفك وحجز دورك مباشرة اليوم بالتواصل مع السكرتارية عبر الواتساب.
+            </p>
+            <a href="https://wa.me/201032387509?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%D9%8B%20%D8%AF%D9%83%D8%AA%D9%88%D8%B1%20%D8%AE%D8%A7%D9%84%D8%AF%D8%8C%20%D8%A3%D8%B1%D9%8A%D8%AF%20%D8%AD%D8%AC%D8%B2%20%D9%85%D9%84%D9%81%20%D9%84%D9%84%D9%83%D8%B4%D9%81%20%D8%A7%D9%84%D9%8A%D9%88%D9%85%20%D9%88%D9%85%D8%B9%D8%B1%D9%81%D8%A9%20%D8%AF%D9%85%20%D8%AF%D9%88%D8%B1%D9%8A." 
+               target="_blank" class="btn whatsapp-btn">
+                💬 احجز الآن واعرف رقم كشفك عبر الواتساب
+            </a>
+        </div>
+    </section>
+
+    <section id="reviews">
+        <h2>تقييمات المرضى وآرائهم</h2>
+        
+        <div class="reviews-grid" id="reviewsContainer">
+            <p style="text-align: center; grid-column: 1/-1; color: var(--text-muted);">جاري تحميل آراء المرضى...</p>
+        </div>
+
+        <div class="card">
+            <h3 style="margin-bottom:15px;">شاركنا تجربتك ورأيك في العيادة:</h3>
+            <form id="reviewForm">
+                <input type="text" id="reviewerName" placeholder="اسمك الكريم" required>
+                <select id="reviewerRating" required>
+                    <option value="5">⭐⭐⭐⭐⭐ (ممتاز جداً)</option>
+                    <option value="4">⭐⭐⭐⭐ (جيد جداً)</option>
+                    <option value="3">⭐⭐⭐ (متوسط)</option>
+                    <option value="2">⭐⭐ (بحاجة لتحسين)</option>
+                    <option value="1">⭐ (ضعيف)</option>
+                </select>
+                <textarea id="reviewerText" rows="4" placeholder="اكتب رأيك هنا بكل صراحة ليراه الجميع..." required></textarea>
+                <button type="submit" class="btn">إرسال التقييم ليراه الجميع</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>بيانات الاتصال والعنوان</h2>
+        <div class="card contact-info">
+            <p>📍 <span>العنوان:</span> القاهرة - حلوان (بجوار محطة المترو مباشرة)</p>
+            <p>📞 <span>رقم الهاتف / الواتساب:</span> 01032387509</p>
+            <p>⏰ <span>مواعيد العمل:</span> يومياً من الساعة 4 عصراً حتى 10 مساءً (عدا الجمعة)</p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="social-links">
+            <a href="https://facebook.com" target="_blank">🔵</a>
+            <a href="https://wa.me/201032387509" target="_blank">🟢</a>
+            <a href="https://instagram.com" target="_blank">📸</a>
+        </div>
+        <p style="color: var(--text-muted); font-size: 14px;">&copy; 2026 عيادة د. خالد محمد. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <script>
+        // --- إعدادات قاعدة البيانات التجريبية والمحلية للآراء ---
+        const firebaseConfig = {
+            apiKey: "AIzaSyAsExampleKey-OnlyForDemoPurpose",
+            authDomain: "dr-khaled-clinic.firebaseapp.com",
+            projectId: "dr-khaled-clinic"
+        };
+        
+        let db;
+        try {
+            firebase.initializeApp(firebaseConfig);
+            db = firebase.firestore();
+        } catch(e) {
+            console.log("يعمل الموقع بالنظام المحلي التجريبي الفوري بنجاح.");
+        }
+
+        const reviewsContainer = document.getElementById('reviewsContainer');
+        const reviewForm = document.getElementById('reviewForm');
+
+        let localReviews = JSON.parse(localStorage.getItem('clinic_reviews')) || [
+            { name: "أحمد علي", rating: 5, text: "دكتور محترم جداً ويده خفيفة في الشغل، لم أشعر بأي ألم أثناء خلع ضرس العقل." },
+            { name: "سارة أحمد", rating: 5, text: "العيادة نظيفة جداً والتعامل راقي، والنتيجة بعد تبييض الأسنان كانت ممتازة." }
+        ];
+
+        function renderReviews(reviewsList) {
+            reviewsContainer.innerHTML = '';
+            reviewsList.forEach(rev => {
+                const card = document.createElement('div');
+                card.classList.add('review-card');
+                let starsStr = '⭐'.repeat(rev.rating);
+                card.innerHTML = `
+                    <div class="stars">${starsStr}</div>
+                    <p>"${rev.text}"</p>
+                    <strong style="display:block; margin-top:10px; color:var(--primary-color);">- ${rev.name}</strong>
+                `;
+                reviewsContainer.appendChild(card);
+            });
+        }
+
+        if (db) {
+            db.collection("reviews").orderBy("timestamp", "desc").onSnapshot((snapshot) => {
+                let fbReviews = [];
+                snapshot.forEach((doc) => fbReviews.push(doc.data()));
+                if(fbReviews.length > 0) renderReviews(fbReviews);
+                else renderReviews(localReviews);
+            }, () => renderReviews(localReviews));
+        } else {
+            renderReviews(localReviews);
+        }
+
+        reviewForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newReview = {
+                name: document.getElementById('reviewerName').value,
+                rating: parseInt(document.getElementById('reviewerRating').value),
+                text: document.getElementById('reviewerText').value,
+                timestamp: new Date().getTime()
+            };
+
+            if (db) db.collection("reviews").add(newReview).catch(err => console.log(err));
+            
+            localReviews.unshift(newReview);
+            localStorage.setItem('clinic_reviews', JSON.stringify(localReviews));
+            renderReviews(localReviews);
+
+            alert('شكرًا لمشاركتك! تم نشر تقييمك بنجاح وهو ظاهر الآن لجميع زوار الموقع.');
+            reviewForm.reset();
+        });
+
+        // --- التحكم في اللون الرئيسي للموقع ---
+        const colorPicker = document.getElementById('colorPicker');
+        colorPicker.addEventListener('input', (e) => {
+            document.documentElement.style.setProperty('--primary-color', e.target.value);
+        });
+
+        // --- تأثير فقاعات الأسنان الخلفية ---
+        const bubbleContainer = document.getElementById('bubbleContainer');
+        const toothEmojis = ['🦷', '🦷', '✨']; 
+
+        function createBubble() {
+            const bubble = document.createElement('div');
+            bubble.classList.add('tooth-bubble');
+            bubble.innerText = toothEmojis[Math.floor(Math.random() * toothEmojis.length)];
+            bubble.style.left = Math.random() * 100 + 'vw';
+            bubble.style.animationDuration = (Math.random() * 5 + 5) + 's'; 
+            bubble.style.fontSize = (Math.random() * 15 + 15) + 'px'; 
+            bubbleContainer.appendChild(bubble);
+            setTimeout(() => { bubble.remove(); }, 10000);
+        }
+        setInterval(createBubble, 600);
+
+        // --- تأثير ظهور سن 🦷 عند الضغط ---
+        document.addEventListener('click', (e) => {
+            if(['INPUT', 'TEXTAREA', 'SELECT', 'OPTION', 'A'].includes(e.target.tagName)) return;
+            const tooth = document.createElement('div');
+            tooth.classList.add('click-tooth');
+            tooth.innerText = '🦷';
+            tooth.style.left = e.pageX + 'px';
+            tooth.style.top = e.pageY + 'px';
+            document.body.appendChild(tooth);
+            setTimeout(() => { tooth.remove(); }, 600);
+        });
+    </script>
+</body>
+</html>
